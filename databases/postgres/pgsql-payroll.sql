@@ -100,7 +100,7 @@ create table company_bank_account (
 
 create table account_transaction_types (
    id  serial primary key,
-   type  char(3)
+   type  char(3)   -- CR or DR  CR==Credit, DR==Debit
 );
 
 create table account_transactions (

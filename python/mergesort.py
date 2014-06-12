@@ -3,7 +3,8 @@
 # sort left side, then right side
 # stuck last step , sorting merged list
 
-li=[9,7,2,5,3,4,1,6]
+li = [2,9,3,8,4,1,6,7]
+
 mid = len(li) / 2
 right = li[mid:]
 left = li[:mid]
@@ -32,3 +33,14 @@ def sort_smaller(n):
 
 x=sort_smaller(left)
 y=sort_smaller(right)
+m = len(x) / 2
+a = len(y) / 2
+z = x[:m] + y[:m]
+q = x[m:] + y[m:]
+
+if q[0] < z[0]:
+    li = sort_smaller(q) + sort_smaller(z)
+else:
+    li = sort_smaller(z) + sort_smaller(q)
+
+print li

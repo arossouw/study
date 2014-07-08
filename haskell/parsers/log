@@ -1,0 +1,20 @@
+Jun 25 00:04:17 quire <info> postfix/pipe[24637]: 3087EABE0FB1: to=<presheneb@workforce.co.za>, relay=kolabmailboxfilter, delay=0.22, delays=0.07/0.01/0/0.14, dsn=2.0.0, status=sent (delivered via kolabmailboxfilter service)
+Jun 25 00:04:35 quire <info> postfix/pipe[24637]: 0D345ABE0FB1: to=<hannahg@trainingforce.co.za>, relay=kolabmailboxfilter, delay=0.17, delays=0.05/0/0/0.12, dsn=2.0.0, status=sent (delivered via kolabmailboxfilter service)
+Jun 25 00:05:43 quire <info> postfix/pipe[24637]: 6A451ABE0FB1: to=<blanchej@workforce.co.za>, relay=kolabmailboxfilter, delay=0.37, delays=0.05/0/0/0.32, dsn=2.0.0, status=sent (delivered via kolabmailboxfilter service)
+Jun 25 00:07:13 quire <info> postfix/pipe[24637]: E5D22ABE0FB1: to=<busisiuem@baberekiservices.co.za>, relay=kolabmailboxfilter, delay=0.24, delays=0.05/0/0/0.18, dsn=2.0.0, status=sent (delivered via kolabmailboxfilter service)
+Jun 25 00:08:30 quire <info> postfix/pipe[24637]: 8B2D6ABE0FB1: to=<natashat@fempower.co.za>, relay=kolabmailboxfilter, delay=0.29, delays=0.09/0/0/0.19, dsn=2.0.0, status=sent (delivered via kolabmailboxfilter service)
+Jun 25 00:10:02 quire <info> postfix/pipe[24637]: D99C5ABE0FB1: to=<arnor@workforce.co.za>, relay=kolabmailboxfilter, delay=0.24, delays=0.05/0/0/0.19, dsn=2.0.0, status=sent (delivered via kolabmailboxfilter service)
+Jun 25 00:11:41 quire <warning> postfix/smtpd[24767]: warning: database /kolab/etc/postfix/canonical.db is older than source file /kolab/etc/postfix/canonical
+Jun 25 00:11:41 quire <info> postfix/smtpd[24767]: connect from localhost[127.0.0.1]
+Jun 25 00:11:41 quire <warning> postfix/cleanup[24768]: warning: database /kolab/etc/postfix/canonical.db is older than source file /kolab/etc/postfix/canonical
+Jun 25 00:11:41 quire <info> postfix/smtpd[24767]: 8E4B8ABE0FB1: client=localhost[127.0.0.1]
+Jun 25 00:11:41 quire <info> postfix/cleanup[24768]: 8E4B8ABE0FB1: message-id=<28027156.532278593.1403647886296.JavaMail.xncore@z100292.ningops.com>
+Jun 25 00:11:41 quire <info> postfix/smtpd[24767]: disconnect from localhost[127.0.0.1]
+Jun 25 00:11:41 quire <info> postfix/pipe[24765]: 7E5F5ABE0FA4: to=<archive@localhost.invalid>, relay=kolabfilter, delay=0.15, delays=0.02/0/0/0.13, dsn=2.0.0, status=sent (delivered via kolabfilter service)
+Jun 25 00:11:41 quire <info> postfix/pipe[24765]: 7E5F5ABE0FA4: to=<andrek@workforce.co.za>, relay=kolabfilter, delay=0.15, delays=0.02/0/0/0.13, dsn=2.0.0, status=sent (delivered via kolabfilter service)
+Jun 25 00:11:41 quire <info> postfix/pipe[24637]: 8E4B8ABE0FB1: to=<andrek@workforce.co.za>, relay=kolabmailboxfilter, delay=0.16, delays=0.05/0/0/0.11, dsn=2.0.0, status=sent (delivered via kolabmailboxfilter service)
+Jun 25 00:11:41 quire <info> postfix/smtp[24769]: 8E4B8ABE0FB1: to=<archive@localhost.invalid>, relay=10.0.1.84[10.0.1.84]:25, delay=0.2, delays=0.05/0.01/0.08/0.06, dsn=2.0.0, status=sent (250 2.0.0 Ok: queued as BA1CA4C9E88)
+Jun 25 00:11:41 quire <info> postfix/smtp[24769]: 8E4B8ABE0FB1: to=<archive@localhost.invalid>, relay=10.0.1.84[10.0.1.84]:25, delay=0.2, delays=0.05/0.01/0.08/0.06, dsn=2.0.0, status=sent (250 2.0.0 Ok: queued as BA1CA4C9E88)
+Jun 25 00:11:56 quire <info> postfix/smtpd[24767]: connect from localhost[127.0.0.1]
+Jun 25 00:11:56 quire <info> postfix/smtpd[24767]: 83C48ABE0FB1: client=localhost[127.0.0.1]
+Jun 25 00:11:56 quire <info> postfix/cleanup[24768]: 83C48ABE0FB1: message-id=<1403647901.53a9f79d1340f@flevy.com>

@@ -1,39 +1,3 @@
-"""
-# do I correctly initialize and handle empty input?
-Input: {}
-expected Output: 0
-
-# do I correctly handle odd-sized input?
-I: {0}
-O: 0
-
-I: {4294967295} -- try using your max int value
-O: 0
-
-# do I correclty handle even-size input?
-I: {0, 0}
-O: 0
-
-# do I detect basic case of split inversion?
-I: {1, 0}
-O: 1
-
-# do I actually count the split inversions?
-I: {1, 1, 0}
-O: 2
-
-# do I accumulate left-inversions?
-I: {1, 0, 1, 1}
-O: 1
-
-# do I accumulate right-inversions?
-I: {0, 0, 1, 0}
-O: 1
-
-# do I accumulate split-inversions together with sub-problem results?
-I: {1, 0, 1, 0}
-O: 3
-"""
 
 inversion = 0
 

@@ -1,0 +1,167 @@
+from pyramid.response import Response
+from pyramid.view import view_config
+
+from forms.models import groupfinder
+
+from pyramid.security import (
+     remember,
+     forget,
+     authenticated_userid,
+     )
+from sqlalchemy.exc import DBAPIError
+from pyramid.httpexceptions import HTTPFound
+from .models import (
+    DBSession,
+    Users,
+    get_departments,
+    get_groups,
+    Groups,
+    Departments,
+    user_group_table
+    )
+
+import colander
+import deform
+import transaction
+from forms.models import Departments
+
+class EmployeeForm(colander.MappingSchema):
+       Firstname = colander.SchemaNode(colander.String())
+       Surname  = colander.SchemaNode(colander.String())
+       Username = colander.SchemaNode(colander.String())
+       department =  colander.SchemaNode(
+                        colander.Integer(),
+	                widget=deform.widget.SelectWidget(values=get_departments())
+                        )
+       employee_type = colander.SchemaNode(
+                        colander.Integer(),
+                        widget=deform.widget.SelectWidget(values=get_groups())
+                       )
+       Password = colander.SchemaNode(
+                colander.String(),
+                validator=colander.Length(min=5, max=100),
+                widget=deform.widget.PasswordWidget(size=20),
+                description='Type your password and confirm it')
+
+class LoginForm(colander.MappingSchema):
+     username = colander.SchemaNode(colander.String())
+     password = colander.SchemaNode(
+                 colander.String(),
+                 validator=colander.Length(min=5,max=100),
+                 widget=deform.widget.PasswordWidget(size=20),
+                 description='Type your password and confirm it')
+
+@view_config(route_name="login",
+	     renderer='forms:templates/login.mako')
+def login_view(request):
+    """
+    """
+    submitted = 'submit' in request.POST
+    # get the user email from the POST request, if present
+
+    # get the form control field names and values as a list of tuples
+    controls = request.POST.items()
+
+    # instantiate our colander schema
+    schema = LoginForm()
+
+    # create a deform form object from the schema
+    form = deform.Form(schema)
+
+    # if this is a POST request and the user submitted information:
+    if submitted:
+        # try to validate the form and redirect with a success message
+        try:
+            appstruct = form.validate(controls)
+        # if validation failed, the form object will now contain error messages
+        except deform.ValidationFailure, e:
+            return {'form': form}
+
+        login = appstruct['username']
+        password = appstruct['password']
+
+	user = Users.by_username(login)
+        if user and user.validate_password(password):
+	    groups = groupfinder(user.id,request)
+	    if "manager" in groups:
+	    	    url = request.route_url('manager',title='manager')
+	    else:
+		    url = request.route_url('test',title='test')
+
+            headers = remember(request, user.id)
+	    return HTTPFound(location=url, headers=headers)
+        else:
+            request.session.flash('Invalid username or password')
+
+
+    return {'form': form}
+
+@view_config(route_name='test',renderer='forms:templates/test.mako')
+def test_view(request):
+	return {}
+
+@view_config(route_name='logout')
+def logout(request):
+     headers = forget(request)
+     return HTTPFound(location=request.route_url('login'),
+                      headers=headers)
+              
+
+@view_config(route_name='manager', renderer='forms:templates/admin.mako',permission='manager')
+def my_view(request):
+    """
+    A basic employee form with field validation by deform. We have to handle
+    three conditions:
+
+    1) Page visit with no POST request: display a blank form
+    2) POST request that fails validation: return the form with errors
+    3) Successful POST request: flash a success message and redirect
+    """
+    # see if a user submitted the form
+    submitted = 'submit' in request.POST
+
+    # get the form control field names and values as a list of tuples
+    controls = request.POST.items()
+
+    # instantiate our colander schema
+    schema = EmployeeForm()
+
+    # create a deform form object from the schema
+    form = deform.Form(schema)
+
+    # if this is a POST request and the user submitted information:
+    if submitted:
+        # try to validate the form and redirect with a success message
+        try:
+            appstruct = form.validate(controls)
+        # if validation failed, the form object will now contain error messages
+        except deform.ValidationFailure, e:
+            return {'form': form}
+
+	username = appstruct['Username']
+	password = appstruct['Password']
+	firstname = appstruct['Firstname']
+	surname = appstruct['Surname']
+
+        department_id = appstruct['department']
+	group_id = appstruct['employee_type']
+
+	from sqlalchemy.exc import IntegrityError
+	try:
+	       transaction.begin()
+	       user = Users(firstname,surname,username,password)
+	       group = DBSession.query(Groups).filter(Groups.id==group_id).first()
+	       DBSession.add(user)	
+	       user.mygroups.append(group)	
+	       department = DBSession.query(Departments).filter(Departments.id==department_id).first()
+	       DBSession.add(department)
+	       department.mydepartment.append(user)
+	       transaction.commit()
+	except IntegrityError:
+	       transaction.abort()
+
+        request.session.flash("We'll respond eventually! (not really)")
+        return HTTPFound(location=request.route_url('manager'))
+
+    # otherwise return the blank form object
+    return {'form': form}

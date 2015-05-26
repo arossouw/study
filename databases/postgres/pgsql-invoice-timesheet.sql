@@ -53,7 +53,7 @@ insert into invoice_item
    values (1, 45.22, 10.55, 2),
           (1, 93.23, 12.22, 3);
           
-update invoice set total = (SELECT sum(amount) from invoice_item where invoice_id=1), vat = (SELECT sum(vat) from invoice_item);
+update invoice set total = (SELECT sum(amount*qty) from invoice_item where invoice_id=1), vat = (SELECT sum(vat*qty) from invoice_item);
 -- update invoice set (total,vat) =  (SELECT sum(amount),sum(vat) from invoice_item where invoice_id=1);
 
 

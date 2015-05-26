@@ -12,7 +12,8 @@ create table job_history (
     clockno int not null references employee(clockno),
 	from_date DATE NOT NULL,
 	to_date DATE NOT NULL,
-	title varchar(35)
+	title varchar(35),
+	CHECK (from_date < to_date)
 );
 
 create table hr_leave_type (
@@ -26,7 +27,8 @@ create table hr_leave (
     to_date DATE,
 	leave_type_id int references hr_leave_type(id),
 	taken int NOT NULL,
-	days_left int NOT NULL
+	days_left int NOT NULL,
+	CHECK (from_date < to_date)
 );
 
 create table hr_deduction (

@@ -30,3 +30,7 @@ inner join employee_rate er on
        er.emp_no =  t.clockno
 group by t.clockno
 
+select clockno,round(sum(sp_calc_pay(timeid, clockno)),2) as pay,checkin::date as timesheet_day 
+from timesheet 
+group by 1,3;
+

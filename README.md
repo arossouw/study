@@ -1,1 +1,1 @@
-Experimentation of QT4 with CPP and python
+Experimentation of QT4 with cpp and haskell
